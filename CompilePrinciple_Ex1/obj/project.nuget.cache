@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "fINmniCs1eTJ1V+RScIruStq1OHvRMYMeowknQ0Bkw1uHLKcikB8DlklDepdvw/GW36KawbeytXktiqSVK2Xog==",
+  "success": true,
+  "projectFilePath": "/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/CompilePrinciple_Ex1.csproj",
+  "expectedPackageFiles": [
+    "/Users/jinshengkai/.nuget/packages/antlr4.runtime.standard/4.13.1/antlr4.runtime.standard.4.13.1.nupkg.sha512"
+  ],
+  "logs": []
+}

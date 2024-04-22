@@ -1,0 +1,15 @@
+/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/obj/Debug/netcoreapp3.1/CompilePrinciple_Ex1.csproj.AssemblyReference.cache
+/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/obj/Debug/netcoreapp3.1/CompilePrinciple_Ex1.GeneratedMSBuildEditorConfig.editorconfig
+/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/obj/Debug/netcoreapp3.1/CompilePrinciple_Ex1.AssemblyInfoInputs.cache
+/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/obj/Debug/netcoreapp3.1/CompilePrinciple_Ex1.AssemblyInfo.cs
+/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/obj/Debug/netcoreapp3.1/CompilePrinciple_Ex1.csproj.CoreCompileInputs.cache
+/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/bin/Debug/netcoreapp3.1/CompilePrinciple_Ex1.deps.json
+/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/bin/Debug/netcoreapp3.1/CompilePrinciple_Ex1.runtimeconfig.json
+/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/bin/Debug/netcoreapp3.1/CompilePrinciple_Ex1.runtimeconfig.dev.json
+/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/bin/Debug/netcoreapp3.1/CompilePrinciple_Ex1.dll
+/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/bin/Debug/netcoreapp3.1/CompilePrinciple_Ex1.pdb
+/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/bin/Debug/netcoreapp3.1/Antlr4.Runtime.Standard.dll
+/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/obj/Debug/netcoreapp3.1/CompilePrinciple_Ex1.csproj.CopyComplete
+/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/obj/Debug/netcoreapp3.1/CompilePrinciple_Ex1.dll
+/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/obj/Debug/netcoreapp3.1/CompilePrinciple_Ex1.pdb
+/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/obj/Debug/netcoreapp3.1/CompilePrinciple_Ex1.genruntimeconfig.cache
