@@ -117,37 +117,38 @@ public class ASTAnalyzer
                         continue;
                     }
                     parentScope.Identifiers.Add(declarator.ID, IdentifierType.Declaration);
-                    if(declarator.Childs.Count > 0)
+
+                    if (!declarator.IsArray)
                     {
-                        if (!declarator.IsArray)
+                        if (declarator.Childs.Count == 0)
+                            continue;
+
+                        ASTNode.Expression expression = (ASTNode.Expression)declarator.Childs[0];
+                        if (!AcceptableConstantType[expression.Type].Contains(member.TypeText))
                         {
-                            ASTNode.Expression expression = (ASTNode.Expression)declarator.Childs[0];
+                            Console.WriteLine($"Constant type {expression.Type} cannot be assigned to type {member.TypeText}).");
+                            continue;
+                        }
+                        // TODO: Check the range of the constant value.
+                    }
+                    else
+                    {
+                        ASTNode.Expression expression = (ASTNode.Expression)declarator.Childs[0];
+                        if (expression.Type != ConstantType.Integer)
+                        {
+                            Console.WriteLine($"The array length must be an integer number. {expression.Type} is provided.");
+                            continue;
+                        }
+                        for (int i = 1; i < declarator.Childs.Count; i++)
+                        {
+                            expression = (ASTNode.Expression)declarator.Childs[i];
                             if (!AcceptableConstantType[expression.Type].Contains(member.TypeText))
                             {
                                 Console.WriteLine($"Constant type {expression.Type} cannot be assigned to type {member.TypeText}).");
                                 continue;
                             }
-                            // TODO: Check the range of the constant value.
-                        }
-                        else
-                        {
-                            ASTNode.Expression expression = (ASTNode.Expression)declarator.Childs[0];
-                            if (expression.Type != ConstantType.Integer)
-                            {
-                                Console.WriteLine($"The array length must be an integer number. {expression.Type} is provided.");
-                                continue;
-                            }
-                            for(int i = 1; i < declarator.Childs.Count; i++)
-                            {
-                                expression = (ASTNode.Expression)declarator.Childs[i];
-                                if (!AcceptableConstantType[expression.Type].Contains(member.TypeText))
-                                {
-                                    Console.WriteLine($"Constant type {expression.Type} cannot be assigned to type {member.TypeText}).");
-                                    continue;
-                                }
 
-                                // TODO: Check the range of constant value.
-                            }
+                            // TODO: Check the range of constant value.
                         }
                     }
                 }

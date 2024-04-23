@@ -50,6 +50,7 @@ struct C
 	double c4=23.234d;
 	long double c5=12.23456432235d;
 	short arr[10]={0,1,2,3,4,5,6,7,8,9};
+	short arr1;
 	C testBool1;
 	A::innerModule::internal testBool2;
 	int16 testInt = 2 + 5 * 2 / 3;

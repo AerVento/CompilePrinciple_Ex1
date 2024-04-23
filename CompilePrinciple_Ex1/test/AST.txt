@@ -77,6 +77,8 @@ Specification
 				(Integer):7
 				(Integer):8
 				(Integer):9
+		Member_Type(short)
+			Variable_arr1
 		Member_Type(C)
 			Variable_testBool1
 		Member_Type(A::innerModule::internal)
