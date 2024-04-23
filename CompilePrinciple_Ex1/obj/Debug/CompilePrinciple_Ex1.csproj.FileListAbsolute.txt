@@ -1,6 +1,0 @@
-/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/bin/Debug/CompilePrinciple_Ex1.exe
-/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/bin/Debug/CompilePrinciple_Ex1.pdb
-/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/obj/Debug/CompilePrinciple_Ex1.csproj.AssemblyReference.cache
-/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/obj/Debug/CompilePrinciple_Ex1.csproj.CoreCompileInputs.cache
-/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/obj/Debug/CompilePrinciple_Ex1.exe
-/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/obj/Debug/CompilePrinciple_Ex1.pdb
