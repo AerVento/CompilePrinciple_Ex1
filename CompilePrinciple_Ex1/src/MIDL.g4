@@ -62,7 +62,7 @@ CHAR
     ;
 
 STRING
-    : '"' (ESCAPE_SEQUENCE |  (~'\\' | ~'"') )* '"'
+    : '"' (ESCAPE_SEQUENCE |  (~'\\' | ~'"') )*? '"'
     ;
 
 ID
