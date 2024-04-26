@@ -1,45 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security;
 
 public class ASTAnalyzer
 {
-    public HashSet<string> TypeNames = new HashSet<string>()
+    public HashSet<SystemType> Types = new HashSet<SystemType>()
     {
-        "short", "int16",
-        "long", "int32",
-        "longlong", "int64",
-        "unsignedshort", "uint16",
-        "unsignedlong", "uint32",
-        "unsignedlonglong", "uint64",
-        "char", "string",
-        "boolean",
-        "float", "double", "longdouble",
+        SystemType.SHORT, SystemType.INT16,
+        SystemType.LONG, SystemType.INT32,
+        SystemType.LONG_LONG, SystemType.INT64,
+        SystemType.UNSIGNED_SHORT, SystemType.UINT16,
+        SystemType.UNSIGNED_LONG, SystemType.UINT32,
+        SystemType.UNSIGNED_LONG_LONG, SystemType.UINT64,
+        SystemType.FLOAT, SystemType.DOUBLE, SystemType.LONG_DOUBLE,
+        SystemType.CHAR,
+        SystemType.STRING,
+        SystemType.BOOLEAN
     };
 
-    private Dictionary<ConstantType, HashSet<string>> AcceptableConstantType = new Dictionary<ConstantType, HashSet<string>>()
+    public SystemType GetType(string typename)
     {
-        {ConstantType.Never, new HashSet<string>()},
-        {ConstantType.Integer,
-            new HashSet<string>() {
-            "short", "int16",
-            "long", "int32",
-            "longlong", "int64",
-            "unsignedshort", "uint16",
-            "unsignedlong", "uint32",
-            "unsignedlonglong", "uint64",
-            }
-        },
-        {ConstantType.Float,
-            new HashSet<string>()
-            {
-                "float", "double", "longdouble",
-            }
-        },
-        {ConstantType.Char, new HashSet<string>(){"char"}},
-        {ConstantType.String, new HashSet<string>{"string"}},
-        {ConstantType.Boolean, new HashSet<string>{"boolean"}},
-    };
+        foreach (var type in Types)
+            if (type.Name == typename)
+                return type;
+        return null;
+    }
+
 
     private MIDLScope SearchScope(ASTNode tree)
     {
@@ -78,7 +63,7 @@ public class ASTAnalyzer
                 }
                 parentScope.Identifiers.Add(@struct.ID, IdentifierType.Struct);
                 var typeName = parentScope.GetScopePrefix() + @struct.ID;
-                TypeNames.Add(typeName);
+                Types.Add(new SystemType.Custom(typeName));
                 var structScope = new MIDLScope() { Name = @struct.ID };
                 parentScope.ChildScopes.Add(@struct.ID, structScope);
                 structScope.Parent = parentScope;
@@ -106,8 +91,8 @@ public class ASTAnalyzer
             }
             else if (node is ASTNode.Member member)
             {
-                if(!TypeNames.Contains(member.TypeText)
-                    && !parentScope.SearchScopeName(member.TypeText, IdentifierType.Struct))
+                var type = GetType(member.TypeText);
+                if(type == null && !parentScope.SearchScopeName(member.TypeText, IdentifierType.Struct))
                 {
                     Print(member.Start.Line, member.Start.Column,
                         $"Type \"{member.TypeText}\" is not defined yet."
@@ -126,20 +111,26 @@ public class ASTAnalyzer
                     }
                     parentScope.Identifiers.Add(declarator.ID, IdentifierType.Declaration);
 
+
                     if (!declarator.IsArray)
                     {
                         if (declarator.Childs.Count == 0)
                             continue;
 
                         ASTNode.Expression expression = (ASTNode.Expression)declarator.Childs[0];
-                        if (!AcceptableConstantType[expression.Type].Contains(member.TypeText))
+                        if (!type.Accept(expression.Type))
                         {
                             Print(expression.Start.Line, expression.Start.Column,
                                 $"Constant type \"{expression.Type}\" cannot be assigned to type \"{member.TypeText}\"."
                                 );
                             continue;
                         }
-                        // TODO: Check the range of the constant value.
+                        else if(expression is ASTNode.Literal literal && !type.Accept(literal.Text))
+                        {
+                            Print(expression.Start.Line, expression.Start.Column,
+                                $"Value \"{literal.Text}\" cannot be assigned to type \"{member.TypeText}\". ");
+                            continue;
+                        }
                     }
                     else
                     {
@@ -154,15 +145,19 @@ public class ASTAnalyzer
                         for (int i = 1; i < declarator.Childs.Count; i++)
                         {
                             expression = (ASTNode.Expression)declarator.Childs[i];
-                            if (!AcceptableConstantType[expression.Type].Contains(member.TypeText))
+                            if (!type.Accept(expression.Type))
                             {
                                 Print(expression.Start.Line, expression.Start.Column,
                                     $"Constant type \"{expression.Type}\" cannot be assigned to type \"{member.TypeText}\"."
                                     );
                                 continue;
                             }
-
-                            // TODO: Check the range of constant value.
+                            else if (expression is ASTNode.Literal literal && !type.Accept(literal.Text))
+                            {
+                                Print(expression.Start.Line, expression.Start.Column,
+                                    $"Value \"{literal.Text}\" cannot be assigned to type \"{member.TypeText}\".");
+                                continue;
+                            }
                         }
                     }
                 }

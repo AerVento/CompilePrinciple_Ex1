@@ -5,7 +5,7 @@
 		struct internal
 		{
 			short c1 = "a";
-			short i1=10;
+			short i1=100000;
 			int16 i2=10;
 		};
     };
@@ -44,7 +44,7 @@ struct C
 {
 	short arr1 = "a";
 	unsigned long long i11=1000;
-	uint64 i12=1000;
+	uint64 i12=100;
 	char c0='a';
 	string c1="abc";
 	boolean c2=true;
