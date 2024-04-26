@@ -14,6 +14,8 @@ public class ASTGenerator : MIDLBaseVisitor<ASTNode>
             child.Parent = specification;
             specification.Childs.Add(child);
         }
+        specification.Start = context.Start;
+        specification.Stop = context.Stop;
         return specification;
     }
 
@@ -36,6 +38,8 @@ public class ASTGenerator : MIDLBaseVisitor<ASTNode>
             child.Parent = module;
             module.Childs.Add(child);
         }
+        module.Start = context.Start;
+        module.Stop = context.Stop;
         return module;
     }
 
@@ -66,6 +70,8 @@ public class ASTGenerator : MIDLBaseVisitor<ASTNode>
         {
             ASTNode.Member member = new ASTNode.Member();
             member.TypeText = type_spec[i].GetText();
+            member.Start = type_spec[i].Start;
+            member.Stop = declarators[i].Stop;
             foreach (var declarator in declarators[i].declarator())
             {
                 var child = VisitDeclarator(declarator);
@@ -76,12 +82,16 @@ public class ASTGenerator : MIDLBaseVisitor<ASTNode>
             member.Parent = @struct;
             @struct.Childs.Add(member);
         }
+        @struct.Start = context.Start;
+        @struct.Stop = context.Stop;
         return @struct;
     }
 
     public override ASTNode VisitDeclarator([NotNull] MIDLParser.DeclaratorContext context)
     {
         ASTNode.Declarator declarator = new ASTNode.Declarator();
+        declarator.Start = context.Start;
+        declarator.Stop = context.Stop;
         if (context.simple_declarator() != null)
         {
             var simple = context.simple_declarator();
@@ -135,6 +145,8 @@ public class ASTGenerator : MIDLBaseVisitor<ASTNode>
             a.Parent = expression;
             b.Parent = expression;
 
+            expression.Start = a.Start;
+            expression.Stop = b.Stop;
             expressions.Push(expression);
         }
 
@@ -162,6 +174,8 @@ public class ASTGenerator : MIDLBaseVisitor<ASTNode>
             a.Parent = expression;
             b.Parent = expression;
 
+            expression.Start = a.Start;
+            expression.Stop = b.Stop;
             expressions.Push(expression);
         }
 
@@ -189,6 +203,8 @@ public class ASTGenerator : MIDLBaseVisitor<ASTNode>
             a.Parent = expression;
             b.Parent = expression;
 
+            expression.Start = a.Start;
+            expression.Stop = b.Stop;
             expressions.Push(expression);
         }
 
@@ -229,6 +245,8 @@ public class ASTGenerator : MIDLBaseVisitor<ASTNode>
             a.Parent = expression;
             b.Parent = expression;
 
+            expression.Start = a.Start;
+            expression.Stop = b.Stop;
             expressions.Push(expression);
         }
 
@@ -269,6 +287,8 @@ public class ASTGenerator : MIDLBaseVisitor<ASTNode>
             a.Parent = expression;
             b.Parent = expression;
 
+            expression.Start = a.Start;
+            expression.Stop = b.Stop;
             expressions.Push(expression);
         }
 
@@ -311,6 +331,8 @@ public class ASTGenerator : MIDLBaseVisitor<ASTNode>
             a.Parent = expression;
             b.Parent = expression;
 
+            expression.Start = a.Start;
+            expression.Stop = b.Stop;
             expressions.Push(expression);
         }
 
@@ -333,6 +355,8 @@ public class ASTGenerator : MIDLBaseVisitor<ASTNode>
             var child = VisitLiteral(context.literal());
             child.Parent = expression;
             expression.Childs.Add(child);
+            expression.Start = context.Start;
+            expression.Stop = context.Stop;
             return expression;
         }
         else
@@ -352,6 +376,11 @@ public class ASTGenerator : MIDLBaseVisitor<ASTNode>
             type = ConstantType.String;
         else if (context.BOOLEAN() != null)
             type = ConstantType.Boolean;
-        return new ASTNode.Literal(type) { Text = context.GetText() }; ;
+        return new ASTNode.Literal(type)
+        {
+            Text = context.GetText(),
+            Start = context.Start,
+            Stop = context.Stop,
+        }; 
     }
 }

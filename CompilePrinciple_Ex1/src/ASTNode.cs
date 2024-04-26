@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Antlr4.Runtime;
 
 public enum ConstantType
 {
@@ -15,11 +16,13 @@ public abstract class ASTNode
 {
     public ASTNode Parent { get; set; }
     public IList<ASTNode> Childs { get; private set; } = new List<ASTNode>();
+    public IToken Start { get; set; }
+    public IToken Stop { get; set; }
     public abstract override string ToString();
 
     public class Specification : ASTNode
     {
-        public override string ToString() => "Specification";
+        public override string ToString() => $"Specification[{Start.Line}:{Start.Column}~{Stop.Line}:{Stop.Column}]";
     }
 
     public abstract class Scope : ASTNode
@@ -29,25 +32,25 @@ public abstract class ASTNode
 
     public class Struct : Scope
     {
-        public override string ToString() => $"Struct_{ID}";
+        public override string ToString() => $"Struct_{ID}[{Start.Line}:{Start.Column}~{Stop.Line}:{Stop.Column}]";
     }
 
     public class Module : Scope
     {
-        public override string ToString() => $"Module_{ID}";
+        public override string ToString() => $"Module_{ID}[{Start.Line}:{Start.Column}~{Stop.Line}:{Stop.Column}]";
     }
 
     public class Member : ASTNode
     {
         public string TypeText { get; set; }
-        public override string ToString() => $"Member_Type({TypeText})";
+        public override string ToString() => $"Member_Type({TypeText})[{Start.Line}:{Start.Column}~{Stop.Line}:{Stop.Column}]";
     }
 
     public class Declarator : ASTNode
     {
         public string ID { get; set; }
         public bool IsArray { get; set; }
-        public override string ToString() => $"{(!IsArray ? "Variable" : "Array")}_{ID}";
+        public override string ToString() => $"{(!IsArray ? "Variable" : "Array")}_{ID}[{Start.Line}:{Start.Column}~{Stop.Line}:{Stop.Column}]";
     }
 
     public class Expression : ASTNode
@@ -150,6 +153,6 @@ public abstract class ASTNode
         public override ConstantType Type => _type;
         public Literal(ConstantType type) => _type = type;
         public string Text { get; set; }
-        public override string ToString() => $"({Type}):{Text}";
+        public override string ToString() => $"({Type}):{Text}[{Start.Line}:{Start.Column}~{Stop.Line}:{Stop.Column}]";
     }
 }

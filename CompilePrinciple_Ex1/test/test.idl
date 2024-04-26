@@ -4,7 +4,8 @@
     {
 		struct internal
 		{
-    		short i1=10;
+			short c1 = "a";
+			short i1=10;
 			int16 i2=10;
 		};
     };
@@ -41,6 +42,7 @@ module B
 
 struct C
 {
+	short arr1 = "a";
 	unsigned long long i11=1000;
 	uint64 i12=1000;
 	char c0='a';
@@ -50,7 +52,6 @@ struct C
 	double c4=23.234d;
 	long double c5=12.23456432235d;
 	short arr[10]={0,1,2,3,4,5,6,7,8,9};
-	short arr1;
 	C testBool1;
 	A::innerModule::internal testBool2;
 	int16 testInt = 2 + 5 * 2 / 3;

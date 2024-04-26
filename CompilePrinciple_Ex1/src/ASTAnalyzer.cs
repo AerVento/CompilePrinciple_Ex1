@@ -54,7 +54,9 @@ public class ASTAnalyzer
             {
                 if (parentScope.Identifiers.ContainsKey(module.ID))
                 {
-                    Console.WriteLine($"The identifier {module.ID} is already defined in scope {parentScope.Name}");
+                    Print(module.Start.Line, module.Start.Column,
+                        $"The identifier \"{module.ID}\" is already defined in scope \"{parentScope.Name}\"."
+                        );
                     continue;
                 }
                 parentScope.Identifiers.Add(module.ID, IdentifierType.Module);
@@ -69,7 +71,9 @@ public class ASTAnalyzer
             {
                 if (parentScope.Identifiers.ContainsKey(@struct.ID))
                 {
-                    Console.WriteLine($"The identifier {@struct.ID} is already defined in scope {parentScope.Name}");
+                    Print(@struct.Start.Line, @struct.Start.Column,
+                        $"The identifier \"{@struct.ID}\" is already defined in scope \"{parentScope.Name}\"."
+                        );
                     continue;
                 }
                 parentScope.Identifiers.Add(@struct.ID, IdentifierType.Struct);
@@ -105,7 +109,9 @@ public class ASTAnalyzer
                 if(!TypeNames.Contains(member.TypeText)
                     && !parentScope.SearchScopeName(member.TypeText, IdentifierType.Struct))
                 {
-                    Console.WriteLine($"Type {member.TypeText} is not defined yet.");
+                    Print(member.Start.Line, member.Start.Column,
+                        $"Type \"{member.TypeText}\" is not defined yet."
+                        );
                     continue;
                 }
                 foreach(var child in member.Childs)
@@ -113,7 +119,9 @@ public class ASTAnalyzer
                     var declarator = (ASTNode.Declarator)child;
                     if (parentScope.Identifiers.ContainsKey(declarator.ID))
                     {
-                        Console.WriteLine($"The identifier {declarator.ID} is already defined in scope {parentScope.Name}");
+                        Print(declarator.Start.Line, declarator.Start.Column,
+                            $"The identifier \"{declarator.ID}\" is already defined in scope \"{parentScope.Name}\"."
+                            );
                         continue;
                     }
                     parentScope.Identifiers.Add(declarator.ID, IdentifierType.Declaration);
@@ -126,7 +134,9 @@ public class ASTAnalyzer
                         ASTNode.Expression expression = (ASTNode.Expression)declarator.Childs[0];
                         if (!AcceptableConstantType[expression.Type].Contains(member.TypeText))
                         {
-                            Console.WriteLine($"Constant type {expression.Type} cannot be assigned to type {member.TypeText}).");
+                            Print(expression.Start.Line, expression.Start.Column,
+                                $"Constant type \"{expression.Type}\" cannot be assigned to type \"{member.TypeText}\"."
+                                );
                             continue;
                         }
                         // TODO: Check the range of the constant value.
@@ -136,7 +146,9 @@ public class ASTAnalyzer
                         ASTNode.Expression expression = (ASTNode.Expression)declarator.Childs[0];
                         if (expression.Type != ConstantType.Integer)
                         {
-                            Console.WriteLine($"The array length must be an integer number. {expression.Type} is provided.");
+                            Print(expression.Start.Line, expression.Start.Column,
+                                $"The array length must be an integer number. \"{expression.Type}\" is provided."
+                                );
                             continue;
                         }
                         for (int i = 1; i < declarator.Childs.Count; i++)
@@ -144,7 +156,9 @@ public class ASTAnalyzer
                             expression = (ASTNode.Expression)declarator.Childs[i];
                             if (!AcceptableConstantType[expression.Type].Contains(member.TypeText))
                             {
-                                Console.WriteLine($"Constant type {expression.Type} cannot be assigned to type {member.TypeText}).");
+                                Print(expression.Start.Line, expression.Start.Column,
+                                    $"Constant type \"{expression.Type}\" cannot be assigned to type \"{member.TypeText}\"."
+                                    );
                                 continue;
                             }
 
@@ -154,6 +168,11 @@ public class ASTAnalyzer
                 }
             }
         }
+    }
+
+    private void Print(int line, int col, string msg)
+    {
+        Console.WriteLine($"[Line {line}:{col}]:{msg}");
     }
 
     public void Start(ASTNode node)
