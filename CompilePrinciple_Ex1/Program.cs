@@ -3,44 +3,16 @@ using System.IO;
 using System.Collections.Generic;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
+using Antlr4.StringTemplate;
 
 namespace CompilePrinciple_Ex1
 {
     class Program
     {
-        static string SyntaxTree(MIDLParser parser, IParseTree tree)
-        {
-            string output = "";
-            Stack<(IParseTree, int)> nodes = new Stack<(IParseTree, int)>();
-            nodes.Push((tree, 0));
-            while (nodes.Count > 0)
-            {
-                (IParseTree node, int level) = nodes.Pop();
-
-                string nodeText = "";
-                if (node is RuleContext ruleContext)
-                {
-                    nodeText = parser.RuleNames[ruleContext.RuleIndex];
-                }
-                else if (node is ITerminalNode terminal)
-                {
-                    nodeText = '\'' + terminal.GetText() + '\'';
-                }
-
-
-                for (int i = 0; i < level; i++)
-                    nodeText = '\t' + nodeText;
-
-                output += nodeText + '\n';
-
-                int count = node.ChildCount;
-                for (int i = count - 1; i >= 0; i--)
-                {
-                    nodes.Push((node.GetChild(i), level + 1));
-                }
-            }
-            return output;
-        }
+        static string MIDLInputFilePath = "/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/test/test.idl";
+        static string ASTOutputFilePath = "/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/test/AST.txt";
+        static string TemplateInputFilePath = "/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/templates/test.stg";
+        static string CodeOutputFilePath = "/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/output/test.hxx";
         static string AST(ASTNode tree)
         {
             string output = "";
@@ -64,8 +36,7 @@ namespace CompilePrinciple_Ex1
         }
         static void Main(string[] args)
         {
-            string filePath = "/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/test/test.idl";
-            string content = File.ReadAllText(filePath);
+            string content = File.ReadAllText(MIDLInputFilePath);
             ICharStream stream = CharStreams.fromString(content);
             ITokenSource lexer = new MIDLLexer(stream);
             ITokenStream tokens = new CommonTokenStream(lexer);
@@ -74,12 +45,12 @@ namespace CompilePrinciple_Ex1
             ASTGenerator astGenerator = new ASTGenerator();
             ASTNode node = tree.Accept(astGenerator);
 
-            string outputPath = "/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/test/AST.txt";
-            string output = AST(node);
-            File.WriteAllText(outputPath, output);
+            File.WriteAllText(ASTOutputFilePath, AST(node));
 
             ASTAnalyzer analyzer = new ASTAnalyzer();
             analyzer.Start(node);
+
+            File.WriteAllText(CodeOutputFilePath, node.ToCppCode(0));
 
             Console.WriteLine("Completed.");
         }

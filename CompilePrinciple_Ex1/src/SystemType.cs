@@ -23,16 +23,6 @@
     public abstract bool Accept(string value);
     public abstract bool Accept(ConstantType type);
 
-    public override bool Equals(object obj)
-    {
-        return Name.Equals(obj);
-    }
-
-    public override int GetHashCode()
-    {
-        return Name.GetHashCode();
-    }
-
     class Int16 : SystemType
     {
         public override bool Accept(string value)

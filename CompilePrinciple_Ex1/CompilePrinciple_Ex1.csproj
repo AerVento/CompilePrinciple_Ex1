@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <PackageReference Include="Antlr4.Runtime.Standard" Version="4.13.1" />
-    <PackageReference Include="StringTemplate4" Version="4.0.8" />
   </ItemGroup>
 
   <ItemGroup>
@@ -15,10 +14,14 @@
     <None Remove="dependencies\" />
     <None Remove="test\" />
     <None Remove="StringTemplate4" />
+    <None Remove="output\" />
+    <None Remove="src\grammar\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\" />
     <Folder Include="dependencies\" />
     <Folder Include="test\" />
+    <Folder Include="output\" />
+    <Folder Include="src\grammar\" />
   </ItemGroup>
 </Project>
