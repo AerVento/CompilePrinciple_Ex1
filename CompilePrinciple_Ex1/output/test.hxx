@@ -1,3 +1,4 @@
+typedef const char* string;
 namespace A
 {
 	namespace innerModule

@@ -3,7 +3,6 @@ using System.IO;
 using System.Collections.Generic;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
-using Antlr4.StringTemplate;
 
 namespace CompilePrinciple_Ex1
 {
@@ -11,7 +10,6 @@ namespace CompilePrinciple_Ex1
     {
         static string MIDLInputFilePath = "/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/test/test.idl";
         static string ASTOutputFilePath = "/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/test/AST.txt";
-        static string TemplateInputFilePath = "/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/templates/test.stg";
         static string CodeOutputFilePath = "/Users/jinshengkai/Projects/CompilePrinciple_Ex1/CompilePrinciple_Ex1/output/test.hxx";
         static string AST(ASTNode tree)
         {

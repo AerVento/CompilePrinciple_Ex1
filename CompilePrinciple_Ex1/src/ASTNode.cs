@@ -34,6 +34,7 @@ public abstract class ASTNode
         public override string ToCppCode(int level)
         {
             string ans = "";
+            ans += "typedef const char* string;\n";
             foreach (var child in Childs)
                 ans += child.ToCppCode(level) + "\n";
             return ans;
